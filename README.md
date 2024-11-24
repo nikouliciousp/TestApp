@@ -1,4 +1,4 @@
-# Teacher Management System
+# Test App
 
 This project is a part of Teacher Management System implemented in Java. It provides basic CRUD operations to manage teacher records in a database.
 
