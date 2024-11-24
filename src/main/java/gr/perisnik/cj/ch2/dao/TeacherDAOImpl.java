@@ -46,18 +46,30 @@ public class TeacherDAOImpl implements ITeacherDAO {
     @Override
     public Teacher updateTeacher(Teacher teacher) throws TeacherDAOException {
         String sql = "UPDATE teachers SET firstname = ?, lastname = ? WHERE id = ?";
+
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            if (teacher.getFirstname().equals("") || teacher.getLastname().equals("")) {
-                return null;
+            // Check if the teacher exists first
+            String checkSql = "SELECT id FROM teachers WHERE id = ?";
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+                checkStmt.setInt(1, teacher.getId());
+                try (ResultSet rs = checkStmt.executeQuery()) {
+                    if (!rs.next()) {  // If no teacher is found with this ID
+                        throw new TeacherDAOException("Teacher with ID " + teacher.getId() + " does not exist.");
+                    }
+                }
             }
 
+            // If the teacher exists, proceed with the update
             pstmt.setString(1, teacher.getFirstname());
             pstmt.setString(2, teacher.getLastname());
             pstmt.setInt(3, teacher.getId());
 
-            pstmt.executeUpdate();
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated == 0) {
+                throw new TeacherDAOException("Error updating teacher with ID " + teacher.getId());
+            }
 
             return teacher;
         } catch (SQLException e) {
@@ -65,6 +77,7 @@ public class TeacherDAOImpl implements ITeacherDAO {
             throw new TeacherDAOException("Error updating teacher: " + e.getMessage());
         }
     }
+
 
     @Override
     public void deleteTeacher(int teacherId) throws TeacherDAOException {
