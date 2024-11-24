@@ -15,8 +15,9 @@ class TeacherDAOImplTest {
     private static ITeacherDAO teacherDAO;
 
     @BeforeAll
-    public static void setUpClass() {
+    public static void setUpClass() throws SQLException {
         teacherDAO = new TeacherDAOImpl();
+        DBHelper.eraseData();
     }
     @BeforeEach
     void setUp() throws TeacherDAOException {
