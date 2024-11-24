@@ -59,8 +59,7 @@ public class DBUtil {
         try {
             conn = ds.getConnection();
         } catch (SQLException e) {
-            e.addSuppressed(null);
-            throw e;
+            throw new SQLException("Failed to obtain database connection", e);
         }
         return conn;
     }
@@ -74,7 +73,7 @@ public class DBUtil {
                 conn.close();
             }
         } catch (SQLException e) {
-            e.addSuppressed(null);
+            e.printStackTrace();
         }
     }
 }
