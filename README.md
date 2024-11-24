@@ -8,7 +8,7 @@ This project is a part of Teacher Management System implemented in Java. It prov
 - **Update Teacher**: Update existing teacher information.
 - **Delete Teacher**: Remove a teacher from the database.
 - **Get Teacher**: Retrieve teacher information by ID or last name.
-- **List All Teachers**: List all teachers stored in the database.
+- **Get All Teachers**: List all teachers stored in the database.
 
 ## Technologies Used
 
