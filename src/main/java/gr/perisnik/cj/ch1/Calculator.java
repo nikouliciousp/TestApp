@@ -1,4 +1,4 @@
-package gr.perisnik.cj;
+package gr.perisnik.cj.ch1;
 
 public class Calculator {
     public int add(int a, int b) {
